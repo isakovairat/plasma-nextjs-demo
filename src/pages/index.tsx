@@ -1,11 +1,32 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
+/* eslint-disable @next/next/no-img-element */
+import Head from "next/head";
+import { useState } from "react";
+import styled from "styled-components";
 
-const inter = Inter({ subsets: ['latin'] })
+import { IconClock } from "@salutejs/plasma-icons";
+import { Container } from "@salutejs/plasma-web/components/Grid";
+import { TabItem, Tabs } from "@salutejs/plasma-web/components/Tabs";
+import { DsplS, H2 } from "@salutejs/plasma-web/components/Typography";
+import { Button } from "@/shared/ui";
+
+const Wrapper = styled.div`
+  padding: 20px;
+  background-color: rgb(77, 43, 216);
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  column-gap: 12px;
+`;
+
+const Divider = styled.div<{ size: string }>`
+  height: ${({ size }) => `${size}px`};
+`;
 
 export default function Home() {
+  const items = Array(8).fill("Tab");
+  const [index, setIndex] = useState(0);
+
   return (
     <>
       <Head>
@@ -14,101 +35,39 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${styles.main} ${inter.className}`}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.tsx</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
-        </div>
-
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
+      <main>
+        <Wrapper>
+          <DsplS bold={false} mt={24} mb={24} color="#fff">
+            Можно&nbsp;ли открыть&nbsp;ИП на&nbsp;двоих человек в&nbsp;2024 году
+          </DsplS>
+          <ButtonWrapper>
+            <Button view="primary">Читать</Button>
+            <Button view="secondary">Поделиться</Button>
+          </ButtonWrapper>
+        </Wrapper>
+        <Divider size="40" />
+        <Container>
+          <H2 color="#fff">Публикации</H2>
+          <Divider size="24" />
+          <Tabs view="filled" stretch size="xs">
+            {items.map((tab, i) => (
+              <TabItem
+                view="secondary"
+                key={`item:${i}`}
+                size="s"
+                selected={i === index}
+                tabIndex={0}
+                contentLeft={<IconClock size="xs" color="inherit" />}
+                onClick={() => setIndex(i)}
+                disabled={false}
+              >
+                {`${tab} ${i}`}
+              </TabItem>
+            ))}
+          </Tabs>
+          <Divider size="60" />
+        </Container>
       </main>
     </>
-  )
+  );
 }
